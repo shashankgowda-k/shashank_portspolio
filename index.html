@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Shashank - Software Engineer specializing in modern web development, backend systems, and scalable applications." />
+  <title>Shashank | Software Engineer Portfolio</title>
+
+  <!-- Apple iPhone Typography (SF Pro Display & Text) + Inter Fallback -->
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- External Stylesheet with 3D Engine & Theme Media Queries -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Three.js Library for High-Performance 3D WebGL Graphics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- 3D Specular Cursor Spotlight & Cyber HUD Reticle (Tracks user mouse with spring physics) -->
+  <div id="cursor-spotlight" class="cursor-3d-spotlight" aria-hidden="true">
+    <div class="cursor-crosshair-ring"></div>
+  </div>
+
+  <!-- =========================================================
+       HEADER & NAVIGATION
+       Includes branding, responsive vertical navbar, theme toggle,
+       and accessible mobile hamburger drawer.
+       ========================================================= -->
+  <header id="site-header" class="site-header">
+    <nav class="navbar" aria-label="Main Navigation">
+      <!-- Brand / Logo -->
+      <a href="#hero" class="brand-logo" aria-label="Home">
+        <span class="logo-code">&lt;</span>Shashank<span class="logo-code"> /&gt;</span>
+      </a>
+
+      <!-- Desktop & Mobile Vertical Navigation Menu Links -->
+      <ul id="nav-links" class="nav-links" role="list">
+        <li><a href="#hero" class="nav-link-item"><span class="nav-index">[01]</span> Home</a></li>
+        <li><a href="#about" class="nav-link-item"><span class="nav-index">[02]</span> About</a></li>
+        <li><a href="#skills" class="nav-link-item"><span class="nav-index">[03]</span> Skills</a></li>
+        <li><a href="#timeline" class="nav-link-item"><span class="nav-index">[04]</span> Timeline</a></li>
+        <li><a href="#projects" class="nav-link-item"><span class="nav-index">[05]</span> Projects</a></li>
+        <li><a href="#contact" class="nav-link-item"><span class="nav-index">[06]</span> Contact</a></li>
+      </ul>
+
+      <!-- Navigation Actions (Theme toggle + Mobile Hamburger) -->
+      <div class="nav-actions">
+        <!-- Theme Switcher / Night Mode Toggle -->
+        <div class="theme-toggle-wrapper">
+          <button 
+            id="theme-toggle-btn" 
+            class="theme-toggle-btn" 
+            type="button" 
+            aria-label="Toggle Dark Mode"
+            title="Toggle Dark / Light Mode (Detects default browser theme)"
+          >
+            <span class="theme-icon light-icon" aria-hidden="true">&#9728;</span>
+            <span class="theme-icon dark-icon" aria-hidden="true">&#9790;</span>
+            <span id="theme-mode-text" class="theme-mode-label">THEME</span>
+          </button>
+        </div>
+
+        <!-- Mobile Vertical Navbar Hamburger Button -->
+        <button
+          id="mobile-nav-toggle"
+          class="mobile-nav-toggle"
+          type="button"
+          aria-label="Open Navigation Menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <span class="hamburger-line top"></span>
+          <span class="hamburger-line middle"></span>
+          <span class="hamburger-line bottom"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Vertical Navbar Backdrop -->
+    <div id="nav-backdrop" class="nav-backdrop" aria-hidden="true"></div>
+  </header>
+
+  <!-- =========================================================
+       MAIN CONTENT CONTAINER
+       ========================================================= -->
+  <main id="main-content">
+
+    <!-- =======================================================
+         1. HERO SECTION (PIXEL ART STYLE)
+         Features retro HUD frame, provided background image,
+         welcoming title, brief tagline, and character stats.
+         ======================================================= -->
+    <section id="hero" class="section hero-section" aria-labelledby="hero-title">
+      <!-- Technical Video Background & Live Particle Canvas -->
+      <div class="video-background-container" aria-hidden="true">
+        <!-- Looping Ambient Tech Video -->
+        <video 
+          id="bg-video" 
+          class="hero-bg-video" 
+          autoplay 
+          loop 
+          muted 
+          playsinline 
+          poster="tech-bg.jpg"
+        >
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-circuit-board-microchip-with-blue-light-43224-large.mp4" type="video/mp4" />
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-code-31913-large.mp4" type="video/mp4" />
+        </video>
+        
+        <!-- Live High-Performance 60FPS Circuit Stream Video Canvas -->
+        <canvas id="tech-video-canvas" class="tech-video-canvas"></canvas>
+        <div class="video-overlay-gradient"></div>
+        <div class="video-scanlines"></div>
+      </div>
+
+      <!-- Three.js Interactive 3D WebGL Tech Core Canvas (Cursor Tracking) -->
+      <canvas id="three-hero-canvas" class="three-hero-canvas" aria-hidden="true"></canvas>
+
+      <!-- Atmospheric Ambient Glow Orbs -->
+      <div class="hero-ambient-lights" aria-hidden="true">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+      </div>
+
+      <!-- Subtle Scanline / CRT Texture -->
+      <div class="crt-scanlines" aria-hidden="true"></div>
+
+      <div class="container hero-container">
+        <!-- Interactive 3D Tilt HUD Dialog Window -->
+        <div class="pixel-hud-dialog tilt-card" id="hud-tilt-card">
+          <!-- Dynamic Specular Glare -->
+          <div class="tilt-glare" aria-hidden="true"></div>
+
+          <div class="tilt-inner">
+            <!-- Top Window Title Bar (Technical System Shell) -->
+            <div class="pixel-hud-topbar depth-layer-1">
+              <div class="pixel-hud-title">
+                <span aria-hidden="true">&#9654;</span> SYS_CORE // ARCHITECTURE_V1.0 // SHASHANK.DEV
+              </div>
+              <div class="pixel-window-controls">
+                <button id="fx-toggle-btn" class="fx-toggle-btn" type="button" aria-label="Toggle Background Video Effect">
+                  [VIDEO FX: ON]
+                </button>
+                <span class="window-btn" aria-hidden="true"></span>
+                <span class="window-btn" aria-hidden="true"></span>
+                <span class="window-btn close" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <!-- HUD Content Body -->
+            <div class="pixel-hud-body">
+              <div class="hero-text-content depth-layer-2">
+                <!-- Technical Status Badge -->
+                <div class="status-badge-wrapper">
+                  <div class="pixel-badge">
+                    <span class="status-dot-pixel"></span>
+                    <span>SYS: ONLINE // PORT: 443 // OPEN TO OPPORTUNITIES</span>
+                  </div>
+                </div>
+
+                <!-- Welcome Title -->
+                <h1 id="hero-title" class="hero-headline">
+                  <span class="greeting-lead">&gt; INITIALIZING SYSTEM ARCHITECTURE...</span>
+                  I'M <span class="highlight">SHASHANK</span><span class="pixel-cursor">_</span>
+                </h1>
+
+                <!-- Brief Tagline -->
+                <p class="hero-subtitle">
+                  Software Engineer building high-performance web applications, scalable backends, and pixel-crafted user experiences.
+                </p>
+
+                <!-- Technical System Telemetry Panel -->
+                <div class="pixel-stats-panel" aria-label="System Telemetry">
+                  <div class="stat-row">
+                    <span class="stat-label">DISCIPLINE:</span>
+                    <span class="stat-val">FULL-STACK &amp; DISTRIBUTED SYSTEMS</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-label">SYSTEM HP:</span>
+                    <div class="stat-bar" aria-hidden="true"><div class="stat-bar-fill"></div></div>
+                    <span class="stat-val">100% OPERATIONAL</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-label">CORE FOCUS:</span>
+                    <span class="stat-val">HIGH-THROUGHPUT MICROSERVICES &amp; SCALABLE APIS</span>
+                  </div>
+                </div>
+
+                <!-- Call-to-Action Buttons (Pixel Art Style) -->
+                <div class="hero-actions">
+                  <a href="#projects" class="pixel-btn pixel-btn-primary">
+                    <span>&#9654;</span> View Projects
+                  </a>
+                  <a href="#contact" class="pixel-btn pixel-btn-secondary">
+                    <span>&#9993;</span> Get In Touch
+                  </a>
+                  <a href="Shashank_261007_101932.pdf" class="pixel-btn pixel-btn-outline" download>
+                    <span>&#11123;</span> Download CV
+                  </a>
+                </div>
+
+                <!-- Quick Link Chips -->
+                <div class="hero-socials">
+                  <a href="https://www.linkedin.com/in/shashank-k-9801a339b" target="_blank" rel="noopener noreferrer" class="social-chip">
+                    LinkedIn &rarr;
+                  </a>
+                  <a href="mailto:Shashankgowdru.k@gmail.com" class="social-chip">
+                    Shashankgowdru.k@gmail.com
+                  </a>
+                  <a href="tel:+918618811860" class="social-chip">
+                    +91 8618811860
+                  </a>
+                </div>
+              </div>
+
+              <!-- Interactive 3D Holographic Character Card with Multi-Plane Depth -->
+              <aside class="hero-character-card" aria-label="Software Engineer Profile Card">
+                <!-- Floating 3D Holographic Parallax Badges (Multi-plane cursor tracking) -->
+                <div class="floating-3d-tag tag-top-left" data-depth="1.8">
+                  <span class="hologram-pulse-dot"></span> 3D CORE v2.4
+                </div>
+                <div class="floating-3d-tag tag-mid-right" data-depth="1.2">
+                  <span>◈</span> FULL-STACK
+                </div>
+                <div class="floating-3d-tag tag-bot-left" data-depth="1.5">
+                  <span>⚡</span> 99.9% UPTIME
+                </div>
+
+                <!-- 3D Perspective Tilt Card -->
+                <div class="character-frame tilt-card" id="character-tilt-card">
+                  <div class="tilt-glare" aria-hidden="true"></div>
+                  <div class="tilt-inner">
+                    <div class="character-img-wrapper depth-layer-2">
+                      <img 
+                        src="profile.png" 
+                        alt="Shashank - Software Engineer" 
+                        class="character-photo"
+                      />
+                    </div>
+                    <div class="character-card-footer depth-layer-3">
+                      <div class="character-name">SHASHANK</div>
+                      <div class="character-class">SOFTWARE ARCHITECT // 64-BIT</div>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         2. ABOUT SECTION
+         Professional summary, bio, career focus, and image/avatar.
+         ======================================================= -->
+    <!-- =======================================================
+         2. ABOUT SECTION
+         Professional summary, bio, career focus, and image/avatar.
+         ======================================================= -->
+    <section id="about" class="section about-section" aria-labelledby="about-title">
+      <div class="container about-container">
+        <h2 id="about-title" class="section-title">About Me</h2>
+        <p class="section-subtitle">A glimpse into my background and what drives my work</p>
+
+        <div class="about-grid">
+          <!-- Bio & Background Text (3D Tilt Card) -->
+          <article class="about-bio tilt-card" data-max-tilt="6">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner depth-layer-2">
+              <p>
+                Passionate software engineer focused on writing clean, maintainable, and high-performance code. Experienced in frontend UI design, backend API development, and distributed data workflows.
+              </p>
+              <p>
+                When not writing code, I explore new software architectures, open-source projects, and emerging tech stacks to engineer frictionless digital experiences.
+              </p>
+            </div>
+          </article>
+
+          <!-- Profile Picture (3D Tilt Card with Parallax Depth) -->
+          <div class="about-avatar-wrapper tilt-card" data-max-tilt="10">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner depth-layer-2" style="width:100%;height:100%;">
+              <img src="profile.png" alt="Shashank - Software Engineer" class="avatar-img" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         3. SKILLS SECTION
+         Technical skills categorized by frontend, backend, tools, etc.
+         ======================================================= -->
+    <!-- =======================================================
+         3. TECHNICAL SKILLS SECTION (HIGH CLARITY TELEMETRY)
+         Categorized technical skills with interactive filter tabs,
+         visual proficiency meters, and tech emblem badges.
+         ======================================================= -->
+    <section id="skills" class="section skills-section" aria-labelledby="skills-title">
+      <div class="container skills-container">
+        <h2 id="skills-title" class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">Core capabilities, architectures, and engineering frameworks</p>
+
+        <!-- Interactive Domain Filter Navigation Tabs -->
+        <div class="skills-filter-bar" role="tablist" aria-label="Skills Category Filter">
+          <button class="skills-filter-btn active" type="button" data-filter="all" role="tab" aria-selected="true">
+            <span class="filter-dot"></span> [ALL SPECIFICATIONS]
+          </button>
+          <button class="skills-filter-btn" type="button" data-filter="languages" role="tab" aria-selected="false">
+            <span class="filter-dot"></span> &lt;/&gt; LANGUAGES
+          </button>
+          <button class="skills-filter-btn" type="button" data-filter="frontend" role="tab" aria-selected="false">
+            <span class="filter-dot"></span> ◈ FRONTEND &amp; UI
+          </button>
+          <button class="skills-filter-btn" type="button" data-filter="backend" role="tab" aria-selected="false">
+            <span class="filter-dot"></span> ⚙ BACKEND &amp; DATA
+          </button>
+          <button class="skills-filter-btn" type="button" data-filter="devops" role="tab" aria-selected="false">
+            <span class="filter-dot"></span> ⚡ TOOLS &amp; CLOUD
+          </button>
+        </div>
+
+        <div class="skills-grid">
+          <!-- Category 1: Languages -->
+          <div class="skill-category tilt-card cat-languages" data-category="languages" data-max-tilt="8">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="category-heading depth-layer-1">
+                <div class="category-heading-group">
+                  <div class="cat-badge-icon" aria-hidden="true">&lt;/&gt;</div>
+                  <div>
+                    <h3 class="category-heading-title">Core Languages</h3>
+                    <span class="category-sub">SYNTAX &amp; ARCHITECTURE</span>
+                  </div>
+                </div>
+                <span class="category-metric">[4 STACKS]</span>
+              </div>
+              <ul class="skill-pill-list depth-layer-2" role="list">
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">JS</span>
+                      <span class="skill-name">JavaScript (ES6+)</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">EXPERT</span>
+                      <span class="skill-pct">95%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 95%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">TS</span>
+                      <span class="skill-name">TypeScript</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">ADVANCED</span>
+                      <span class="skill-pct">92%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 92%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">PY</span>
+                      <span class="skill-name">Python</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">PROFICIENT</span>
+                      <span class="skill-pct">88%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 88%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">SQL</span>
+                      <span class="skill-name">SQL (Relational)</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">PROFICIENT</span>
+                      <span class="skill-pct">85%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 85%;"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Category 2: Frontend & UI -->
+          <div class="skill-category tilt-card cat-frontend" data-category="frontend" data-max-tilt="8">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="category-heading depth-layer-1">
+                <div class="category-heading-group">
+                  <div class="cat-badge-icon" aria-hidden="true">◈</div>
+                  <div>
+                    <h3 class="category-heading-title">Frontend &amp; UI</h3>
+                    <span class="category-sub">CLIENT RUNTIME &amp; 3D</span>
+                  </div>
+                </div>
+                <span class="category-metric">[4 STACKS]</span>
+              </div>
+              <ul class="skill-pill-list depth-layer-2" role="list">
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">REACT</span>
+                      <span class="skill-name">React.js</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">ADVANCED</span>
+                      <span class="skill-pct">92%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 92%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">3D</span>
+                      <span class="skill-name">Three.js / WebGL</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">SPECIALIZED</span>
+                      <span class="skill-pct">88%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 88%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">HTML</span>
+                      <span class="skill-name">HTML5 / Semantic Web</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">EXPERT</span>
+                      <span class="skill-pct">98%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 98%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">CSS</span>
+                      <span class="skill-name">CSS3 / Modern CSS</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">EXPERT</span>
+                      <span class="skill-pct">95%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 95%;"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Category 3: Backend & Database -->
+          <div class="skill-category tilt-card cat-backend" data-category="backend" data-max-tilt="8">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="category-heading depth-layer-1">
+                <div class="category-heading-group">
+                  <div class="cat-badge-icon" aria-hidden="true">⚙</div>
+                  <div>
+                    <h3 class="category-heading-title">Backend &amp; Databases</h3>
+                    <span class="category-sub">MICROSERVICES &amp; DATA</span>
+                  </div>
+                </div>
+                <span class="category-metric">[4 STACKS]</span>
+              </div>
+              <ul class="skill-pill-list depth-layer-2" role="list">
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">NODE</span>
+                      <span class="skill-name">Node.js / Express</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">ADVANCED</span>
+                      <span class="skill-pct">92%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 92%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">API</span>
+                      <span class="skill-name">RESTful APIs</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">EXPERT</span>
+                      <span class="skill-pct">94%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 94%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">PG</span>
+                      <span class="skill-name">PostgreSQL</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">PROFICIENT</span>
+                      <span class="skill-pct">86%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 86%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">MDB</span>
+                      <span class="skill-name">MongoDB</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">PROFICIENT</span>
+                      <span class="skill-pct">84%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 84%;"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Category 4: Tools & DevOps -->
+          <div class="skill-category tilt-card cat-devops" data-category="devops" data-max-tilt="8">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="category-heading depth-layer-1">
+                <div class="category-heading-group">
+                  <div class="cat-badge-icon" aria-hidden="true">⚡</div>
+                  <div>
+                    <h3 class="category-heading-title">Tools &amp; DevOps</h3>
+                    <span class="category-sub">CI/CD &amp; INFRASTRUCTURE</span>
+                  </div>
+                </div>
+                <span class="category-metric">[4 STACKS]</span>
+              </div>
+              <ul class="skill-pill-list depth-layer-2" role="list">
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">GIT</span>
+                      <span class="skill-name">Git / GitHub</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">EXPERT</span>
+                      <span class="skill-pct">95%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 95%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">DKR</span>
+                      <span class="skill-name">Docker</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">PROFICIENT</span>
+                      <span class="skill-pct">85%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 85%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">BASH</span>
+                      <span class="skill-name">Linux / Shell Scripting</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">PROFICIENT</span>
+                      <span class="skill-pct">88%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 88%;"></div>
+                  </div>
+                </li>
+                <li class="skill-pill">
+                  <div class="skill-header-row">
+                    <div class="skill-name-wrap">
+                      <span class="tech-tag-icon">IDE</span>
+                      <span class="skill-name">VS Code / JetBrains</span>
+                    </div>
+                    <div class="skill-stats-wrap">
+                      <span class="skill-level-text">ADVANCED</span>
+                      <span class="skill-pct">92%</span>
+                    </div>
+                  </div>
+                  <div class="skill-bar-track" aria-hidden="true">
+                    <div class="skill-bar-progress" style="width: 92%;"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         4. TIMELINE / EXPERIENCE SECTION
+         Chronological career journey, education, and milestones.
+         ======================================================= -->
+    <section id="timeline" class="section timeline-section" aria-labelledby="timeline-title">
+      <div class="container timeline-container">
+        <h2 id="timeline-title" class="section-title">Experience &amp; Education</h2>
+        <p class="section-subtitle">My professional journey, roles, and academic background</p>
+
+        <div class="timeline" role="feed" aria-label="Career Timeline">
+          <!-- Timeline Entry 1 -->
+          <article class="timeline-item tilt-card" role="article" data-max-tilt="6">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="timeline-content depth-layer-2">
+                <span class="timeline-period">2024 &ndash; Present</span>
+                <h3 class="timeline-role">Software Engineer</h3>
+                <p class="timeline-company">Company Name / Organization</p>
+                <p class="timeline-description">
+                  Architecting core features, optimizing API latencies, and collaborating cross-functionally to deliver high-performance user-friendly solutions.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Timeline Entry 2 -->
+          <article class="timeline-item tilt-card" role="article" data-max-tilt="6">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="timeline-content depth-layer-2">
+                <span class="timeline-period">2023 &ndash; 2024</span>
+                <h3 class="timeline-role">Junior Developer / Intern</h3>
+                <p class="timeline-company">Company Name / Startup</p>
+                <p class="timeline-description">
+                  Assisted in frontend component development, unit testing coverage, and microservice optimization.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Timeline Entry 3 (Education) -->
+          <article class="timeline-item tilt-card" role="article" data-max-tilt="6">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="timeline-content depth-layer-2">
+                <span class="timeline-period">2020 &ndash; 2024</span>
+                <h3 class="timeline-role">Bachelor of Engineering in Computer Science</h3>
+                <p class="timeline-company">University / Institution Name</p>
+                <p class="timeline-description">
+                  Focused on Data Structures, Algorithms, Operating Systems, Database Management Systems, and Modern Web Architecture.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         5. PROJECTS SECTION
+         Featured software projects, case studies, and code links.
+         ======================================================= -->
+    <section id="projects" class="section projects-section" aria-labelledby="projects-title">
+      <div class="container projects-container">
+        <h2 id="projects-title" class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A collection of software applications I've engineered</p>
+
+        <div class="projects-grid">
+          <!-- Project Card 1 -->
+          <article class="project-card tilt-card" data-max-tilt="10">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="project-thumbnail-wrapper depth-layer-1">
+                <div class="project-terminal-header">
+                  <span class="terminal-dot red"></span>
+                  <span class="terminal-dot yellow"></span>
+                  <span class="terminal-dot green"></span>
+                  <span class="terminal-cmd">orchestrator.daemon --active</span>
+                </div>
+                <div class="project-graphic-preview">
+                  <div class="cube-status-pill">
+                    <span class="status-dot-pixel"></span> ONLINE // PORT: 9000
+                  </div>
+                  <span class="cube-metric-tag">&lt;QUEUE_LATENCY: 4ms&gt;</span>
+                </div>
+              </div>
+              <div class="project-info depth-layer-2">
+                <h3 class="project-title">Cloud Task Orchestrator</h3>
+                <p class="project-description">
+                  A real-time distributed job scheduling and workflow engine with webhook notifications, telemetry stream, and an interactive admin dashboard.
+                </p>
+                <ul class="project-tags" role="list">
+                  <li>Node.js</li>
+                  <li>PostgreSQL</li>
+                  <li>Redis</li>
+                  <li>Docker</li>
+                </ul>
+                <div class="project-links depth-layer-3">
+                  <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">Source Code &rarr;</a>
+                  <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">Live Demo &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 2 -->
+          <article class="project-card tilt-card" data-max-tilt="10">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="project-thumbnail-wrapper depth-layer-1">
+                <div class="project-terminal-header">
+                  <span class="terminal-dot red"></span>
+                  <span class="terminal-dot yellow"></span>
+                  <span class="terminal-dot green"></span>
+                  <span class="terminal-cmd">telemetry.stream --d3-render</span>
+                </div>
+                <div class="project-graphic-preview">
+                  <div class="cube-status-pill">
+                    <span class="status-dot-pixel"></span> STREAM: 60FPS
+                  </div>
+                  <span class="cube-metric-tag">&lt;THROUGHPUT: 120k req/s&gt;</span>
+                </div>
+              </div>
+              <div class="project-info depth-layer-2">
+                <h3 class="project-title">Analytics &amp; Metrics Dashboard</h3>
+                <p class="project-description">
+                  Interactive data visualization web application rendering real-time telemetry, WebSocket feeds, and executive KPIs with customizable chart widgets.
+                </p>
+                <ul class="project-tags" role="list">
+                  <li>TypeScript</li>
+                  <li>React</li>
+                  <li>D3.js</li>
+                  <li>WebSockets</li>
+                </ul>
+                <div class="project-links depth-layer-3">
+                  <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">Source Code &rarr;</a>
+                  <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">Live Demo &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project Card 3 -->
+          <article class="project-card tilt-card" data-max-tilt="10">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner">
+              <div class="project-thumbnail-wrapper depth-layer-1">
+                <div class="project-terminal-header">
+                  <span class="terminal-dot red"></span>
+                  <span class="terminal-dot yellow"></span>
+                  <span class="terminal-dot green"></span>
+                  <span class="terminal-cmd">portfolio.build --prod</span>
+                </div>
+                <div class="project-graphic-preview">
+                  <div class="cube-status-pill">
+                    <span class="status-dot-pixel"></span> LIGHTHOUSE: 100/100
+                  </div>
+                  <span class="cube-metric-tag">&lt;ACCESSIBILITY: A11Y&gt;</span>
+                </div>
+              </div>
+              <div class="project-info depth-layer-2">
+                <h3 class="project-title">Developer Portfolio Template</h3>
+                <p class="project-description">
+                  Clean, semantic, ultra-responsive portfolio template with automated system theme detection, 3D WebGL physics, and frictionless navigation.
+                </p>
+                <ul class="project-tags" role="list">
+                  <li>HTML5</li>
+                  <li>CSS3</li>
+                  <li>JavaScript</li>
+                  <li>Three.js</li>
+                </ul>
+                <div class="project-links depth-layer-3">
+                  <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">Source Code &rarr;</a>
+                  <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">Live Demo &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         6. CONTACT SECTION
+         Contact information, social handles, and message form.
+         ======================================================= -->
+    <section id="contact" class="section contact-section" aria-labelledby="contact-title">
+      <div class="container contact-container">
+        <h2 id="contact-title" class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">Feel free to reach out for collaborations, questions, or opportunities</p>
+
+        <div class="contact-wrapper">
+          <!-- Contact Details / Direct Links (3D Tilt Card) -->
+          <div class="contact-details tilt-card" data-max-tilt="6">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner depth-layer-2">
+              <p><strong>Email:</strong> <a href="mailto:Shashankgowdru.k@gmail.com">Shashankgowdru.k@gmail.com</a></p>
+              <p><strong>Phone:</strong> <a href="tel:+918618811860">+91 8618811860</a></p>
+              <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/shashank-k-9801a339b" target="_blank" rel="noopener noreferrer">linkedin.com/in/shashank-k</a></p>
+            </div>
+          </div>
+
+          <!-- Contact Form (3D Tilt Card) -->
+          <form class="contact-form tilt-card" action="#" method="POST" data-max-tilt="6">
+            <div class="tilt-glare" aria-hidden="true"></div>
+            <div class="tilt-inner depth-layer-2">
+              <div class="form-group">
+                <label for="contact-name">Name</label>
+                <input type="text" id="contact-name" name="name" placeholder="Your Name" required />
+              </div>
+
+              <div class="form-group" style="margin-top:1rem;">
+                <label for="contact-email">Email</label>
+                <input type="email" id="contact-email" name="email" placeholder="your.email@example.com" required />
+              </div>
+
+              <div class="form-group" style="margin-top:1rem;">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+              </div>
+
+              <button type="submit" class="pixel-btn pixel-btn-primary" style="margin-top:1.25rem;">
+                <span>&#9993;</span> Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+       Copyright notice, quick back-to-top anchor, and socials.
+       ========================================================= -->
+  <footer id="site-footer" class="site-footer">
+    <div class="container footer-container">
+      <p class="footer-copy">
+        &copy; 2026 Shashank. All rights reserved. Built with semantic HTML &amp; modern web standards.
+      </p>
+
+      <div class="footer-back-to-top">
+        <a href="#hero" aria-label="Back to top of page">&uarr; Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       SCRIPTS (THEME DETECTION & INTERACTIVE TOGGLE)
+       Uses CSS media query (prefers-color-scheme) to detect browser
+       default theme while allowing manual overrides.
+       ========================================================= -->
+  <script>
+    (function initTheme() {
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeModeText = document.getElementById('theme-mode-text');
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+      // Determine initial theme:
+      // 1. Saved localStorage preference
+      // 2. Default browser media query detection (dark vs light)
+      const savedTheme = localStorage.getItem('portfolio-theme');
+      let currentTheme = savedTheme || (mediaQuery.matches ? 'dark' : 'light');
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (themeModeText) {
+          themeModeText.textContent = theme === 'dark' ? 'NIGHT' : 'DAY';
+        }
+        if (themeToggleBtn) {
+          themeToggleBtn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+        }
+      }
+
+      // Initial apply
+      applyTheme(currentTheme);
+
+      // Listen for browser/system theme changes when user has no explicit override
+      mediaQuery.addEventListener('change', (e) => {
+        if (!localStorage.getItem('portfolio-theme')) {
+          const detectedTheme = e.matches ? 'dark' : 'light';
+          applyTheme(detectedTheme);
+        }
+      });
+
+      // Interactive Toggle Button Click Listener
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const activeTheme = document.documentElement.getAttribute('data-theme') || (mediaQuery.matches ? 'dark' : 'light');
+          const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+          
+          localStorage.setItem('portfolio-theme', newTheme);
+          applyTheme(newTheme);
+        });
+      }
+    })();
+
+    // =========================================================================
+    // RESPONSIVE VERTICAL NAVBAR & MOBILE DRAWER ENGINE
+    // Handles collapsible mobile menu, smooth anchor scrolling, backdrop clicks,
+    // and keyboard accessibility (ESC key).
+    // =========================================================================
+    (function initResponsiveNavigation() {
+      const toggleBtn = document.getElementById('mobile-nav-toggle');
+      const navLinks = document.getElementById('nav-links');
+      const backdrop = document.getElementById('nav-backdrop');
+      if (!toggleBtn || !navLinks) return;
+
+      function openNav() {
+        navLinks.classList.add('nav-open');
+        toggleBtn.classList.add('open');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toggleBtn.setAttribute('aria-label', 'Close Navigation Menu');
+        if (backdrop) backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeNav() {
+        navLinks.classList.remove('nav-open');
+        toggleBtn.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-label', 'Open Navigation Menu');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = navLinks.classList.contains('nav-open');
+        if (isOpen) {
+          closeNav();
+        } else {
+          openNav();
+        }
+      });
+
+      // Close upon clicking any navigation link
+      const links = navLinks.querySelectorAll('a');
+      links.forEach((link) => {
+        link.addEventListener('click', () => {
+          closeNav();
+        });
+      });
+
+      // Close when clicking the backdrop
+      if (backdrop) {
+        backdrop.addEventListener('click', closeNav);
+      }
+
+      // Close with Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('nav-open')) {
+          closeNav();
+        }
+      });
+
+      // Auto-close if screen resized above mobile breakpoint (900px)
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && navLinks.classList.contains('nav-open')) {
+          closeNav();
+        }
+      });
+    })();
+
+    // =========================================================================
+    // TECHNICAL SKILLS INTERACTIVE CATEGORY FILTER ENGINE
+    // Smooth domain category filtering for high-clarity viewing
+    // =========================================================================
+    (function initSkillsFilter() {
+      const filterBtns = document.querySelectorAll('.skills-filter-btn');
+      const categories = document.querySelectorAll('.skill-category');
+      if (!filterBtns.length || !categories.length) return;
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach((b) => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+
+          const filterVal = btn.getAttribute('data-filter');
+
+          categories.forEach((cat) => {
+            if (filterVal === 'all') {
+              cat.classList.remove('filtered-out');
+            } else {
+              const catType = cat.getAttribute('data-category');
+              if (catType === filterVal) {
+                cat.classList.remove('filtered-out');
+              } else {
+                cat.classList.add('filtered-out');
+              }
+            }
+          });
+        });
+      });
+    })();
+
+    // =========================================================================
+    // TECHNICAL BACKGROUND VIDEO CANVAS ENGINE
+    // Renders real-time 60FPS digital circuit pulses, glowing data streams,
+    // and interactive connection waves across the technical background.
+    // =========================================================================
+    (function initTechVideoCanvas() {
+      const canvas = document.getElementById('tech-video-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const heroSection = document.getElementById('hero');
+      const bgVideo = document.getElementById('bg-video');
+      const fxToggleBtn = document.getElementById('fx-toggle-btn');
+
+      let width = (canvas.width = heroSection.offsetWidth);
+      let height = (canvas.height = heroSection.offsetHeight);
+      let isRunning = true;
+      let mouse = { x: width / 2, y: height / 2, active: false };
+
+      // Handle window resizing
+      function handleResize() {
+        if (!heroSection) return;
+        width = canvas.width = heroSection.offsetWidth;
+        height = canvas.height = heroSection.offsetHeight;
+        initCircuitNodes();
+      }
+      window.addEventListener('resize', handleResize);
+
+      // Track mouse position for interactive wave response
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+        mouse.active = true;
+      });
+
+      heroSection.addEventListener('mouseleave', () => {
+        mouse.active = false;
+      });
+
+      // Circuit Nodes and Fast Glowing Data Packets
+      const nodes = [];
+      const packets = [];
+      const NUM_NODES = Math.min(50, Math.floor(width / 28));
+
+      function initCircuitNodes() {
+        nodes.length = 0;
+        packets.length = 0;
+        for (let i = 0; i < NUM_NODES; i++) {
+          nodes.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.45,
+            vy: (Math.random() - 0.5) * 0.45,
+            radius: Math.random() * 1.8 + 1,
+            alpha: Math.random() * 0.45 + 0.35,
+          });
+        }
+
+        for (let i = 0; i < 22; i++) {
+          packets.push({
+            from: Math.floor(Math.random() * nodes.length),
+            to: Math.floor(Math.random() * nodes.length),
+            progress: Math.random(),
+            speed: Math.random() * 0.009 + 0.005,
+            color: Math.random() > 0.4 ? '#00ffcc' : '#00a6ff',
+          });
+        }
+      }
+
+      initCircuitNodes();
+
+      let animFrameId;
+      function render() {
+        if (!isRunning) return;
+        ctx.clearRect(0, 0, width, height);
+
+        // Update and draw circuit nodes
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+          n.x += n.vx;
+          n.y += n.vy;
+
+          if (n.x < 0 || n.x > width) n.vx *= -1;
+          if (n.y < 0 || n.y > height) n.vy *= -1;
+
+          // Subtle kinetic mouse push
+          if (mouse.active) {
+            const dx = mouse.x - n.x;
+            const dy = mouse.y - n.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+              n.x -= (dx / dist) * 0.8;
+              n.y -= (dy / dist) * 0.8;
+            }
+          }
+
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0, 255, 204, ${n.alpha})`;
+          ctx.shadowColor = '#00ffcc';
+          ctx.shadowBlur = 6;
+          ctx.fill();
+        }
+
+        // Draw connecting circuit traces
+        ctx.shadowBlur = 0;
+        const maxDist = 160;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < maxDist) {
+              const alpha = (1 - dist / maxDist) * 0.22;
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = `rgba(0, 255, 204, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Render fast travelling glowing data pulses
+        for (let i = 0; i < packets.length; i++) {
+          const p = packets[i];
+          p.progress += p.speed;
+          if (p.progress >= 1) {
+            p.progress = 0;
+            p.from = Math.floor(Math.random() * nodes.length);
+            p.to = Math.floor(Math.random() * nodes.length);
+          }
+
+          const n1 = nodes[p.from];
+          const n2 = nodes[p.to];
+          if (n1 && n2) {
+            const dx = n2.x - n1.x;
+            const dy = n2.y - n1.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < maxDist + 30) {
+              const px = n1.x + dx * p.progress;
+              const py = n1.y + dy * p.progress;
+
+              ctx.beginPath();
+              ctx.arc(px, py, 2.4, 0, Math.PI * 2);
+              ctx.fillStyle = p.color;
+              ctx.shadowColor = p.color;
+              ctx.shadowBlur = 10;
+              ctx.fill();
+              ctx.shadowBlur = 0;
+            }
+          }
+        }
+
+        animFrameId = requestAnimationFrame(render);
+      }
+
+      render();
+
+      // Video FX Toggle Button Handler
+      if (fxToggleBtn) {
+        fxToggleBtn.addEventListener('click', () => {
+          isRunning = !isRunning;
+          fxToggleBtn.textContent = isRunning ? '[VIDEO FX: ON]' : '[VIDEO FX: PAUSED]';
+          fxToggleBtn.style.color = isRunning ? 'var(--accent-cyan)' : 'var(--text-muted)';
+          
+          if (bgVideo) {
+            if (isRunning) {
+              bgVideo.play().catch(() => {});
+            } else {
+              bgVideo.pause();
+            }
+          }
+
+          if (isRunning) {
+            render();
+          } else {
+            cancelAnimationFrame(animFrameId);
+            ctx.clearRect(0, 0, width, height);
+          }
+        });
+      }
+    })();
+
+    // =========================================================================
+    // THREE.JS INTERACTIVE 3D WEBGL ENGINE (CURSOR-TRACKING 3D TECH CORE)
+    // Renders a floating, rotating 3D holographic polyhedron core with dual
+    // concentric orbital gimbal rings, 6 orbiting satellite nodes, and 260+
+    // particle stars that dynamically track user cursor with 6-DoF spring physics.
+    // =========================================================================
+    (function initThreeHeroScene() {
+      const canvas = document.getElementById('three-hero-canvas');
+      const heroSection = document.getElementById('hero');
+      if (!canvas || !heroSection || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      let width = heroSection.offsetWidth;
+      let height = heroSection.offsetHeight;
+
+      const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+      camera.position.z = 10;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // 3D Tech Core Parent Container
+      const coreGroup = new THREE.Group();
+      scene.add(coreGroup);
+
+      // 1. Outer Wireframe Icosahedron (Glowing Cyan Lattice)
+      const icoGeo = new THREE.IcosahedronGeometry(2.2, 1);
+      const icoWire = new THREE.WireframeGeometry(icoGeo);
+      const icoMat = new THREE.LineBasicMaterial({
+        color: 0x00ffcc,
+        transparent: true,
+        opacity: 0.65,
+        linewidth: 1.5,
+      });
+      const icoMesh = new THREE.LineSegments(icoWire, icoMat);
+      coreGroup.add(icoMesh);
+
+      // 2. Inner Faceted Crystalline Core
+      const innerGeo = new THREE.OctahedronGeometry(1.2, 0);
+      const innerMat = new THREE.MeshStandardMaterial({
+        color: 0x0088ff,
+        roughness: 0.15,
+        metalness: 0.85,
+        transparent: true,
+        opacity: 0.75,
+      });
+      const innerCore = new THREE.Mesh(innerGeo, innerMat);
+      coreGroup.add(innerCore);
+
+      // 3. Orbital Concentric Gimbal Rings
+      const ring1Geo = new THREE.TorusGeometry(3.2, 0.035, 16, 100);
+      const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.8 });
+      const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+      coreGroup.add(ring1);
+
+      const ring2Geo = new THREE.TorusGeometry(3.9, 0.03, 16, 100);
+      const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x7928ca, transparent: true, opacity: 0.7 });
+      const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+      ring2.rotation.x = Math.PI / 3;
+      coreGroup.add(ring2);
+
+      // 4. Orbiting Satellite Cyber-Nodes (6 Faceted Geometries)
+      const satellites = [];
+      const satGeos = [
+        new THREE.OctahedronGeometry(0.32, 0),
+        new THREE.TetrahedronGeometry(0.35, 0),
+        new THREE.BoxGeometry(0.35, 0.35, 0.35),
+        new THREE.IcosahedronGeometry(0.28, 0),
+      ];
+      const satMat = new THREE.MeshStandardMaterial({
+        color: 0x00ffcc,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.85,
+      });
+
+      for (let i = 0; i < 6; i++) {
+        const satMesh = new THREE.Mesh(satGeos[i % satGeos.length], satMat.clone());
+        satMesh.userData = {
+          orbitRadius: 4.6 + (i * 0.5),
+          speed: 0.009 + (i * 0.003) * (i % 2 === 0 ? 1 : -1),
+          angle: (i * Math.PI) / 3,
+          tiltY: (i * 0.35) - 0.9,
+        };
+        coreGroup.add(satMesh);
+        satellites.push(satMesh);
+      }
+
+      // 5. Floating 3D Particle Constellation (260 Luminous Stars)
+      const particleCount = 260;
+      const particleGeo = new THREE.BufferGeometry();
+      const posArray = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        posArray[i] = (Math.random() - 0.5) * 18;
+        posArray[i + 1] = (Math.random() - 0.5) * 14;
+        posArray[i + 2] = (Math.random() - 0.5) * 12;
+      }
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.075,
+        color: 0x00ffcc,
+        transparent: true,
+        opacity: 0.75,
+      });
+      const particleCloud = new THREE.Points(particleGeo, particleMat);
+      scene.add(particleCloud);
+
+      // Dynamic 3D Scene Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+
+      const dynamicPointLight = new THREE.PointLight(0x00ffcc, 2.5, 25);
+      dynamicPointLight.position.set(0, 0, 8);
+      scene.add(dynamicPointLight);
+
+      const secondaryLight = new THREE.PointLight(0x7928ca, 2.0, 25);
+      secondaryLight.position.set(-6, -4, 6);
+      scene.add(secondaryLight);
+
+      // Responsive Resize
+      window.addEventListener('resize', () => {
+        if (!heroSection) return;
+        width = heroSection.offsetWidth;
+        height = heroSection.offsetHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      });
+
+      // Interactive Cursor Motion Tracking with 6-DoF Physics Damping
+      let mouseX = 0, mouseY = 0;
+      let targetRotX = 0, targetRotY = 0;
+      let curRotX = 0, curRotY = 0;
+      let targetPosX = 0, targetPosY = 0;
+      let curPosX = 0, curPosY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        targetRotX = mouseY * 0.75;
+        targetRotY = mouseX * 0.95;
+        targetPosX = mouseX * 1.8;
+        targetPosY = mouseY * 1.2;
+
+        // Move 3D point lights to follow cursor position in space
+        dynamicPointLight.position.x = mouseX * 7;
+        dynamicPointLight.position.y = mouseY * 5;
+        secondaryLight.position.x = -mouseX * 5;
+        secondaryLight.position.y = -mouseY * 4;
+      });
+
+      // Animation Render Loop
+      function animateThree() {
+        requestAnimationFrame(animateThree);
+
+        // Smooth Lerp Physics Interpolation toward cursor targets
+        curRotX += (targetRotX - curRotX) * 0.045;
+        curRotY += (targetRotY - curRotY) * 0.045;
+        curPosX += (targetPosX - curPosX) * 0.045;
+        curPosY += (targetPosY - curPosY) * 0.045;
+
+        coreGroup.position.x = curPosX;
+        coreGroup.position.y = curPosY;
+
+        coreGroup.rotation.x = curRotX + Math.sin(Date.now() * 0.001) * 0.15;
+        coreGroup.rotation.y = curRotY + Date.now() * 0.0006;
+
+        // Counter-spin orbital rings
+        ring1.rotation.z += 0.006;
+        ring2.rotation.y += 0.004;
+
+        innerCore.rotation.x -= 0.005;
+        innerCore.rotation.y += 0.007;
+
+        // Orbit satellite nodes
+        satellites.forEach((sat) => {
+          sat.userData.angle += sat.userData.speed;
+          sat.position.x = Math.cos(sat.userData.angle) * sat.userData.orbitRadius;
+          sat.position.z = Math.sin(sat.userData.angle) * sat.userData.orbitRadius;
+          sat.position.y = Math.sin(sat.userData.angle * 1.5) * 1.2 + sat.userData.tiltY;
+          sat.rotation.x += 0.02;
+          sat.rotation.y += 0.03;
+        });
+
+        particleCloud.rotation.y += 0.0002;
+        particleCloud.rotation.x = curRotX * 0.2;
+
+        renderer.render(scene, camera);
+      }
+
+      animateThree();
+    })();
+
+    // =========================================================================
+    // 3D CARD PERSPECTIVE TILT & SPECULAR GLARE ENGINE
+    // Applies physical 3D tilt, depth parallax, and glossy reflection to all cards
+    // =========================================================================
+    (function init3DCardTiltEngine() {
+      // Graceful fallback for touch/mobile devices to ensure smooth scrolling
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+      const cards = document.querySelectorAll('.tilt-card');
+
+      cards.forEach((card) => {
+        const glare = card.querySelector('.tilt-glare');
+        const maxTilt = parseFloat(card.getAttribute('data-max-tilt')) || 8;
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          // Normalized coordinates from center [-1, 1]
+          const normX = (x / rect.width) * 2 - 1;
+          const normY = (y / rect.height) * 2 - 1;
+
+          const tiltX = -normY * maxTilt;
+          const tiltY = normX * maxTilt;
+
+          card.style.transform = `perspective(1200px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+
+          if (glare) {
+            glare.style.setProperty('--glare-x', `${x}px`);
+            glare.style.setProperty('--glare-y', `${y}px`);
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+      });
+    })();
+
+    // =========================================================================
+    // FLOATING 3D HOLOGRAPHIC PARALLAX TAGS
+    // Moves floating tags in multi-plane 3D depth based on cursor position
+    // =========================================================================
+    (function initFloating3DTags() {
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+      const tags = document.querySelectorAll('.floating-3d-tag');
+      if (!tags.length) return;
+
+      let curX = 0, curY = 0;
+      let targetX = 0, targetY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        targetX = (e.clientX / window.innerWidth) - 0.5;
+        targetY = (e.clientY / window.innerHeight) - 0.5;
+      });
+
+      function updateTagParallax() {
+        curX += (targetX - curX) * 0.06;
+        curY += (targetY - curY) * 0.06;
+
+        tags.forEach((tag) => {
+          const depth = parseFloat(tag.getAttribute('data-depth')) || 1.0;
+          const moveX = curX * 45 * depth;
+          const moveY = curY * 35 * depth;
+          tag.style.transform = `translate3d(${moveX.toFixed(1)}px, ${moveY.toFixed(1)}px, 0)`;
+        });
+
+        requestAnimationFrame(updateTagParallax);
+      }
+
+      updateTagParallax();
+    })();
+
+    // =========================================================================
+    // AMBIENT 3D CURSOR SPOTLIGHT & INTERACTIVE RETICLE ENGINE
+    // Smooth spring-damped specular illumination and reactive crosshair target
+    // =========================================================================
+    (function initCursorSpotlight() {
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+      const spotlight = document.getElementById('cursor-spotlight');
+      if (!spotlight) return;
+
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let curX = targetX;
+      let curY = targetY;
+
+      window.addEventListener('mousemove', (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      });
+
+      function renderSpotlight() {
+        curX += (targetX - curX) * 0.12;
+        curY += (targetY - curY) * 0.12;
+
+        spotlight.style.left = `${curX.toFixed(1)}px`;
+        spotlight.style.top = `${curY.toFixed(1)}px`;
+
+        requestAnimationFrame(renderSpotlight);
+      }
+
+      renderSpotlight();
+
+      // Trigger reticle target lock expansion when hovering interactive elements
+      const interactiveElements = document.querySelectorAll('a, button, .tilt-card, .skill-pill, input, textarea, .social-chip');
+      interactiveElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => spotlight.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => spotlight.classList.remove('cursor-hover'));
+      });
+    })();
+  </script>
+
+</body>
+</html>
